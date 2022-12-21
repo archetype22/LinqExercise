@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace LinqExercise
 {
@@ -22,64 +23,53 @@ namespace LinqExercise
 
             //TODO: Print the Sum of numbers   [*]
             Console.WriteLine("The Sum of the 'Numbers' array: ");
+            Console.WriteLine("--------------------------------");
+                        
+            Console.WriteLine($"The sum is : {numbers.Sum()}");
             Console.WriteLine();
-            int Sum = numbers.Sum();
-            Console.WriteLine(Sum);
-            Console.WriteLine("------------------------------------");
-            
+
             //TODO: Print the Average of numbers   [*]
             Console.WriteLine("The Average of the 'Numbers' array: ");
-            Console.WriteLine();
-            double Average = numbers.Average();
-            Console.WriteLine(Average);
             Console.WriteLine("------------------------------------");
-            
+                        
+            Console.WriteLine($"The average is : {numbers.Average()}");
+            Console.WriteLine();
+
             //TODO: Order numbers in ascending order and print to the console   [*]
             Console.WriteLine("'Numbers' array in ascending order: ");
-            Console.WriteLine();
-            IEnumerable<int> ascOrder = numbers.OrderBy(x => x);
-            foreach(int item in ascOrder) 
-            {
-                Console.WriteLine(item);
-            }
             Console.WriteLine("-------------------------------------");
-            
+
+            numbers.OrderBy(x => x).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
+
             //TODO: Order numbers in decsending order and print to the console   [*]
             Console.WriteLine("'Numbers' array in descending order: ");
+            Console.WriteLine("-------------------------------------");
+                        
+            numbers.OrderByDescending(x => x).ToList().ForEach(x => Console.WriteLine(x));
             Console.WriteLine();
-            IEnumerable<int> descOrder= numbers.OrderByDescending(x => x);
-            foreach (int item in descOrder) 
-            {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine("----------------------------------------------");
-            
+
             //TODO: Print to the console only the numbers greater than 6   [*]
             Console.WriteLine("Contents of the 'Numbers' array that are > 6: ");
-            Console.WriteLine();
-            IEnumerable<int> numPrint6 = numbers.Where(x => x > 6);
-            foreach (int item in numPrint6) 
-            {
-                Console.WriteLine(item);
-            }
             Console.WriteLine("-------------------------------------");
-            
+
+            numbers.Where(x => x > 6).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
+
             //TODO: Order numbers in any order (acsending or desc) but only print 4 of them **foreach loop only!**   [*]
             Console.WriteLine("The first 4 in 'Numbers', ascending: ");
-            Console.WriteLine();
-            IEnumerable<int> numPrint4 = numbers.OrderBy(x=> x).Take(4);
-            foreach (int item in numPrint4) 
-            {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine("--------------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------");
+                        
+            numbers.OrderBy(x => x).Take(4).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();    
            
             //TODO: Change the value at index 4 to your age, then print the numbers in decsending order   [*]
             Console.WriteLine("'Numbers' at index[4] changed to my age, then 'Numbers' descending: ");
-            Console.WriteLine();
+            Console.WriteLine("------------------------------------------------------------------");
             numbers.SetValue(38, 4);
             numbers.OrderByDescending(x => x).ToList().ForEach(x => Console.WriteLine(x));
             Console.WriteLine("---");
+            Console.WriteLine();
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
@@ -94,7 +84,7 @@ namespace LinqExercise
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
             Console.WriteLine();
             Console.WriteLine("Employees over 26, full names and ages : ");
-            Console.WriteLine("-----------------------------------------------------------------------------");
+            Console.WriteLine("-----------------------------------------");
             Console.WriteLine();
             employees.Where(employee => employee.Age > 26).OrderBy(employee => employee.Age).ThenBy(employee=> employee.FullName).ToList()
                 .ForEach(employee => Console.WriteLine($"{employee.Age}, {employee.FullName}"));
@@ -102,7 +92,7 @@ namespace LinqExercise
             //TODO: Print the Sum and then the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
             Console.WriteLine();
             Console.WriteLine("Sum of and Average of employees' Years of Experience: ");
-            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine("------------------------------------------------------");
             Console.WriteLine();
             int sumOfYOE = employees.Where(employee => employee.YearsOfExperience <= 10 && employee.Age > 35).Sum(yoe => yoe.YearsOfExperience);
             double avgOfYOE = employees.Where(employee => employee.YearsOfExperience <= 10 && employee.Age > 35).Average(yoe => yoe.YearsOfExperience);
@@ -111,7 +101,7 @@ namespace LinqExercise
             //TODO: Add an employee to the end of the list without using employees.Add()
             Console.WriteLine();
             Console.WriteLine("Added new employee to end of the list : ");
-            Console.WriteLine("--------------------");
+            Console.WriteLine("----------------------------------------");
             //Console.WriteLine(string.Join(",", employees.Append("Super Mario")));
             employees.Append(new Employee("Super", "Mario", 33, 14)).ToList().ForEach(x=> Console.WriteLine($"{ x.FullName}, {x.Age}, {x.YearsOfExperience} "));
             
